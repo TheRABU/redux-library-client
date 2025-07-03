@@ -7,11 +7,12 @@ const Navbar = () => {
       title: "Home",
     },
     {
-      path: "/all-books",
+      path: "/books",
       title: "All Books",
     },
+
     {
-      path: "/borrows",
+      path: "/borrow-summary",
       title: "Borrowed",
     },
   ];

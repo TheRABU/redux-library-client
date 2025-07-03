@@ -1,6 +1,19 @@
 import { Link } from "react-router";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import Borrow from "@/pages/borrowbookpage/Borrow";
 
 const AllBooks = () => {
+  const book = {
+    bookId: "adjhlkjwa54a63",
+  };
+
   return (
     <>
       <section className="px-4 py-12 sm:px-6 lg:px-20">
@@ -38,7 +51,7 @@ const AllBooks = () => {
                   <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
                     UX
                   </span>
-                  <Link to={"/add-book"}>
+                  <Link to={"/create-book"}>
                     <button>Add a book</button>
                   </Link>
                 </div>
@@ -60,6 +73,7 @@ const AllBooks = () => {
                     />
                   </svg>
                 </Link>
+                <Borrow bookId={book.bookId} />
               </div>
             </div>
 
