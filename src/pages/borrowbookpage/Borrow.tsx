@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-
+import { toast } from "react-hot-toast";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -23,11 +23,65 @@ import {
 import { Input } from "../../components/ui/input";
 import { Label } from "@/components/ui/label";
 import * as React from "react";
+import { useBorrowBookMutation } from "@/redux/features/book/borrowBooksApi";
+import { useNavigate } from "react-router";
 
-const Borrow = (bookId: any) => {
+// baler bookProps
+interface BorrowProps {
+  bookId: string;
+  title: string;
+  isbn: string;
+  copies?: number;
+  _id?: string;
+}
+
+const Borrow = (book: BorrowProps) => {
   const [date, setDate] = React.useState<Date>();
+  const [open, setOpen] = React.useState(false);
 
-  console.log(bookId);
+  const [borrowBook] = useBorrowBookMutation();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const quantity = form.quantity.value;
+
+    if (quantity > (book.copies ?? 0)) {
+      toast.error("Not enough copies available to borrow.");
+      return;
+    }
+    if (!date) {
+      toast.error("Please select a due date.");
+      return;
+    }
+    const dueDate = date.toISOString();
+
+    try {
+      // await borrowBook({
+      //   bookId: book.bookId ?? book._id,
+      //   title: book.title,
+      //   quantity,
+      //   dueDate,
+      // }).unwrap();
+      const borrowData = {
+        bookId: book.bookId,
+        title: book.title,
+        quantity,
+        dueDate,
+      };
+      await borrowBook(borrowData);
+      console.log(borrowData);
+      toast.success("Book borrowed successfully!");
+      setDate(undefined);
+      setOpen(false);
+      form.reset();
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to borrow book.");
+    }
+  };
 
   return (
     <>
@@ -81,43 +135,71 @@ const Borrow = (bookId: any) => {
       </div> */}
 
       {/* this one is from shadcn */}
-      <Dialog>
-        <form>
-          <DialogTrigger asChild>
-            <Button variant="outline">Borrow this Book</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <Button variant="outline">Borrow this Book</Button>
+        </DialogTrigger>
+
+        <DialogContent className="sm:max-w-[425px]">
+          <form onSubmit={handleSubmit}>
             <DialogHeader>
-              <DialogTitle>Submit your details</DialogTitle>
-              <Label htmlFor="book-title">Book Title</Label>
+              <DialogTitle>{book.title}</DialogTitle>
+              <Label htmlFor="book-title">Submit your details</Label>
               <DialogDescription>
-                Add your details here in order to borrow a book you must select
+                Add your details here in order to borrow a book. You must select
                 the due date and quantity of copies.
               </DialogDescription>
-              <Input type="number" placeholder="Quantities" />
             </DialogHeader>
-            <DialogFooter>
+
+            {/* Quantity input */}
+            <div className="my-4">
+              <p className="text-md text-slate-700 mb-2">
+                Available copies: {book.copies}
+              </p>
+              <Label htmlFor="quantity">Quantity</Label>
+              <Input
+                name="quantity"
+                min={1}
+                type="number"
+                placeholder="Enter number of copies"
+                required
+              />
+            </div>
+
+            {/* Calendar */}
+            <div className="my-4">
+              <Label>Due Date</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     data-empty={!date}
-                    className="data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal"
+                    className={cn(
+                      "w-full justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
+                    )}
                   >
-                    <CalendarIcon />
+                    <CalendarIcon className="mr-2 h-4 w-4" />
                     {date ? format(date, "PPP") : <span>Pick a date</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
-                  <Calendar mode="single" selected={date} onSelect={setDate} />
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    initialFocus
+                  />
                 </PopoverContent>
               </Popover>
-              <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DialogClose>
+            </div>
+
+            {/* Submit Button */}
+            <DialogFooter>
+              <Button type="submit">Borrow</Button>
             </DialogFooter>
-          </DialogContent>
-        </form>
+          </form>
+        </DialogContent>
       </Dialog>
     </>
   );

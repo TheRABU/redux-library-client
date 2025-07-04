@@ -1,40 +1,42 @@
-import { useDispatch } from "react-redux";
-
-import AppDispatch from "@/redux/store"; // If you have typed dispatch
-import { useRef } from "react";
-import { addBook } from "@/redux/features/book/bookSlice";
+import { toast } from "react-hot-toast";
+import { useAddBookMutation } from "@/redux/features/book/booksApi";
+import { useNavigate } from "react-router";
 
 const AddBook = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
+  const [addBook] = useAddBookMutation();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-
-    const title = form.title.value.trim();
-    const author = form.author.value.trim();
-    const isbn = form.isbn.value.trim();
-    const genre = form.genre.value; // Updated select name
-    const description = form.description.value.trim(); // Updated textarea name
-    const quantity = form.quantity.value; // Updated select name
-    const availability = form.availability.value === "available"; // true/false based on select
-
-    // Create book object
+    // let availability = form.availability.value;
+    // if (availability.value === "available") {
+    //   availability = true;
+    // } else {
+    //   availability = false;
+    // }
+    const availability = form.availability.value === "true";
     const newBook = {
-      title,
-      author,
-      genre,
-      isbn,
-      copies: Number(quantity),
-      availability,
-      description,
+      title: form.title.value.trim(),
+      author: form.author.value.trim(),
+      genre: form.genre.value,
+      isbn: form.isbn.value.trim(),
+      description: form.description.value.trim(),
+      copies: Number(form.quantity.value),
+      availability: availability,
     };
     console.log(newBook);
-    // Dispatch the action
-    dispatch(addBook(newBook));
 
-    // Optional: reset form
-    form.reset();
+    try {
+      await addBook(newBook).unwrap();
+      toast.success("Book added successfully!");
+      form.reset();
+      navigate("/");
+    } catch (err) {
+      toast.error("Failed to add book.");
+      console.error(err);
+    }
   };
 
   return (
@@ -76,18 +78,22 @@ const AddBook = () => {
             <div className="my-6 flex gap-4">
               <select name="genre" required className="select-style w-1/2">
                 <option value="">Select Genre</option>
-                <option value="Thriller">Thriller</option>
-                <option value="Novel">Novel</option>
+                <option value="fiction">FICTION</option>
+                <option value="non_fiction">NON_FICTION</option>
+                <option value="science">SCIENCE</option>
+                <option value="history">HISTORY</option>
+                <option value="biography">BIOGRAPHY</option>
+                <option value="fantasy">FANTASY</option>
               </select>
 
-              {/* Availability */}
+              {/* Av</script>ailability */}
               <select
                 name="availability"
                 required
                 className="select-style w-1/2"
               >
-                <option value="available">Available</option>
-                <option value="unavailable">Unavailable</option>
+                <option value="true">Available</option>
+                <option value="false">Unavailable</option>
               </select>
 
               {/* Quantity */}

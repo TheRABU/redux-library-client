@@ -1,9 +1,28 @@
 export interface BookInterface {
-  Title: string;
-  Author: string;
-  Genre: string;
-  ISBN: string;
-  Copies: string;
-  Availability: boolean;
+  _id?: string;
+  bookId?: string;
+  title: string;
+  author: string;
+  genre: string;
+  isbn: string;
+  copies: number;
+  availability: boolean;
   description?: string;
+  bookImgUrl?: string;
+  imgUrl?: string;
+}
+
+export interface BorrowRecord {
+  _id?: string;
+  bookId: string;
+  title: string;
+  isbn: string;
+  quantity: number;
+  dueDate: string;
+}
+
+export interface BorrowSummary {
+  bookTitle: string;
+  isbn: string;
+  totalQuantityBorrowed: number;
 }
