@@ -1,4 +1,19 @@
+import {
+  useGetAllBorrowsQuery,
+  useGetBorrowSummaryQuery,
+} from "@/redux/features/book/borrowBooksApi";
+
 const BorrowSummary = () => {
+  const { data: borrows, isLoading, isError } = useGetAllBorrowsQuery();
+  console.log(borrows);
+  if (isLoading) return <p className="text-center mt-10">Loading...</p>;
+  if (isError)
+    return (
+      <p className="text-center mt-10 text-red-500">
+        Failed to load borrow summary.
+      </p>
+    );
+
   return (
     <>
       <div className="w-full h-auto flex flex-col bg-white dark:bg-gray-900">
@@ -31,88 +46,36 @@ const BorrowSummary = () => {
                 <th className="px-2 2xl:px-6 py-3 bg-gray-200 w-6"></th>
               </tr>
             </thead>
-            <tbody className="undefined select-none">
-              <tr className="border-b">
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  <input type="checkbox" className="w-4 h-4" />
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm">
-                  <div className="flex items-center gap-2">
-                    <img
-                      src="https://firebasestorage.googleapis.com/v0/b/amethgalarcio.appspot.com/o/images%2FCaptura%20de%20pantalla%202024-11-08%20151438.png?alt=media&amp;token=60ba8e16-f724-49d2-9e34-8c812ccd212b"
-                      alt="image"
-                      className="aspect-square rounded-lg object-cover h-16"
-                    />
-                    <p className="font-bold">Book Title</p>
-                  </div>
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  ISBN NUMBER
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  mar, 5 nov 2024
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  apr, 5 2024
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  quantity number
-                </td>
-              </tr>
-              <tr className="border-b">
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  <input type="checkbox" className="w-4 h-4" />
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm">
-                  <div className="flex items-center gap-2">
-                    <img
-                      src="https://firebasestorage.googleapis.com/v0/b/amethgalarcio.appspot.com/o/images%2FCaptura%20de%20pantalla%202024-11-08%20151438.png?alt=media&amp;token=60ba8e16-f724-49d2-9e34-8c812ccd212b"
-                      alt="image"
-                      className="aspect-square rounded-lg object-cover h-16"
-                    />
-                    <p className="font-bold">Book Title</p>
-                  </div>
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  ISBN NUMBER
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  mar, 5 nov 2024
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  apr, 5 2024
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  quantity number
-                </td>
-              </tr>
-              <tr className="border-b">
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  <input type="checkbox" className="w-4 h-4" />
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm">
-                  <div className="flex items-center gap-2">
-                    <img
-                      src="https://firebasestorage.googleapis.com/v0/b/amethgalarcio.appspot.com/o/images%2FCaptura%20de%20pantalla%202024-11-08%20151438.png?alt=media&amp;token=60ba8e16-f724-49d2-9e34-8c812ccd212b"
-                      alt="image"
-                      className="aspect-square rounded-lg object-cover h-16"
-                    />
-                    <p className="font-bold">Book Title</p>
-                  </div>
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  ISBN NUMBER
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  mar, 5 nov 2024
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  apr, 5 2024
-                </td>
-                <td className="px-6 py-1.5 whitespace-nowrap text-sm  text-center">
-                  quantity number
-                </td>
-              </tr>
+            <tbody className="select-none">
+              {borrows?.data?.map((borrow, idx) => (
+                <tr key={idx} className="border-b">
+                  <td className="px-6 py-1.5 text-center">
+                    <input type="checkbox" className="w-4 h-4" />
+                  </td>
+                  <td className="px-6 py-1.5 whitespace-nowrap text-sm">
+                    <div className="flex items-center gap-2">
+                      <img
+                        src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
+                        alt="Book"
+                        className="aspect-square rounded-lg object-cover h-16"
+                      />
+                      <p className="font-bold">{borrow.title}</p>
+                    </div>
+                  </td>
+                  <td className="px-6 py-1.5 text-sm text-center">
+                    {borrow.isbn}
+                  </td>
+                  <td className="px-6 py-1.5 text-sm text-center">
+                    {borrow.createdAt}
+                  </td>
+                  <td className="px-6 py-1.5 text-sm text-center">
+                    {borrow.dueDate}
+                  </td>
+                  <td className="px-6 py-1.5 text-sm text-center">
+                    {borrow.quantity}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

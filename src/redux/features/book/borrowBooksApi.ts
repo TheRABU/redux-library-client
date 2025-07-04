@@ -19,7 +19,7 @@ export const borrowBooksApi = createApi({
 
     // 2. GET /borrow — View all borrow records
     getAllBorrows: builder.query<BorrowRecord[], void>({
-      query: () => "/borrow",
+      query: () => "/borrows",
       providesTags: ["Borrows"],
     }),
 

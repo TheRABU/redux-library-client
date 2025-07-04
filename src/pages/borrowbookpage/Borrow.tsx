@@ -71,7 +71,6 @@ const Borrow = (book: BorrowProps) => {
         dueDate,
       };
       await borrowBook(borrowData);
-      console.log(borrowData);
       toast.success("Book borrowed successfully!");
       setDate(undefined);
       setOpen(false);
