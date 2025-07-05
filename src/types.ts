@@ -6,7 +6,7 @@ export interface BookInterface {
   genre: string;
   isbn: string;
   copies: number;
-  availability: boolean;
+  available: boolean;
   description?: string;
   bookImgUrl?: string;
   imgUrl?: string;

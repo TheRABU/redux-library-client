@@ -1,4 +1,13 @@
+import { useGetBooksQuery } from "@/redux/features/book/booksApi";
+import { Link } from "react-router";
+
 const AllBooksPage = () => {
+  const { data: books, isLoading, isError } = useGetBooksQuery();
+  if (isLoading) return <p className="text-center mt-10">Loading books...</p>;
+  if (isError)
+    return (
+      <p className="text-center mt-10 text-red-500">Failed to load books.</p>
+    );
   return (
     <>
       <section className="dark:bg-gray-900">
@@ -9,66 +18,75 @@ const AllBooksPage = () => {
             </h2>
           </header>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center">
-            <article className="flex border rounded dark:border-gray-700/50 dark:bg-gray-800 max-w-md">
-              <img
-                className="object-cover w-[140px] h-[200px] rounded-l"
-                loading="lazy"
-                src="http://books.google.com/books/content?id=jg8VvObwjM8C&amp;printsec=frontcover&amp;img=1&amp;zoom=5&amp;edge=curl&amp;source=gbs_api"
-                alt="Anselm Kiefer"
-                width="140"
-                height="200"
-              />
-              <div className="flex flex-col justify-between flex-1 p-2">
-                <div className="flex flex-col gap-2">
-                  <h3 className="font-semibold dark:text-white line-clamp-2">
-                    Anselm Kiefer
-                  </h3>
-                  <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3">
-                    Mangano describes studies of baby teeth over the past half
-                    century, specifically the levels of man-made radiation from
-                    atomic bombs and nuclear reactors. He examines how these
-                    studies have been used to set nuclear policy.
-                  </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    -Harry Philbrick
-                  </p>
+            {books?.map((book, idx) => (
+              <article
+                key={idx}
+                className="flex border rounded dark:border-gray-700/50 dark:bg-gray-800 max-w-md"
+              >
+                <img
+                  className="object-cover w-[140px] h-[200px] rounded-l"
+                  loading="lazy"
+                  src={
+                    book.imgUrl
+                      ? book.imgUrl
+                      : "http://books.google.com/books/content?id=jg8VvObwjM8C&amp;printsec=frontcover&amp;img=1&amp;zoom=5&amp;edge=curl&amp;source=gbs_api"
+                  }
+                  alt="Anselm Kiefer"
+                  width="140"
+                  height="200"
+                />
+                <div className="flex flex-col justify-between flex-1 p-2">
+                  <div className="flex flex-col gap-2">
+                    <h3 className="font-semibold dark:text-white line-clamp-2">
+                      {book.title}
+                    </h3>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3">
+                      {book.description}
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      - {book.author}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-end gap-2 dark:text-gray-300 flex-wrap">
+                    <a
+                      target="_blank"
+                      href=""
+                      className="flex items-center gap-1 px-2 py-1 border rounded dark:border-gray-700"
+                      aria-label="Buy on Amazon for 189₹"
+                    >
+                      <img
+                        src="https://www.svgrepo.com/show/349584/amazon.svg"
+                        className="w-5 h-5"
+                        alt=""
+                        width="20"
+                        height="20"
+                      />
+                      <span>Quantity {book.copies}</span>
+                    </a>
+                    <a
+                      target="_blank"
+                      href=""
+                      className="flex items-center gap-1 px-2 py-1 border rounded dark:border-gray-700"
+                      aria-label="Buy on Flipkart for 150₹"
+                    >
+                      <img
+                        src="https://www.svgrepo.com/show/162476/flipkart.svg"
+                        className="w-5 h-5"
+                        alt=""
+                        width="20"
+                        height="20"
+                      />
+                      <span>
+                        {book.available ? "Available" : "Not Available"}
+                      </span>
+                    </a>
+                    <Link to={`/books/${book._id}`}>View Details</Link>
+                  </div>
                 </div>
-                <div className="flex items-center justify-end gap-2 dark:text-gray-300 flex-wrap">
-                  <a
-                    target="_blank"
-                    href=""
-                    className="flex items-center gap-1 px-2 py-1 border rounded dark:border-gray-700"
-                    aria-label="Buy on Amazon for 189₹"
-                  >
-                    <img
-                      src="https://www.svgrepo.com/show/349584/amazon.svg"
-                      className="w-5 h-5"
-                      alt=""
-                      width="20"
-                      height="20"
-                    />
-                    <span>189₹</span>
-                  </a>
-                  <a
-                    target="_blank"
-                    href=""
-                    className="flex items-center gap-1 px-2 py-1 border rounded dark:border-gray-700"
-                    aria-label="Buy on Flipkart for 150₹"
-                  >
-                    <img
-                      src="https://www.svgrepo.com/show/162476/flipkart.svg"
-                      className="w-5 h-5"
-                      alt=""
-                      width="20"
-                      height="20"
-                    />
-                    <span>150₹</span>
-                  </a>
-                </div>
-              </div>
-            </article>
+              </article>
+            ))}
 
-            <article className="flex border rounded dark:border-gray-700/50 dark:bg-gray-800 max-w-md">
+            {/* <article className="flex border rounded dark:border-gray-700/50 dark:bg-gray-800 max-w-md">
               <img
                 className="object-cover w-[140px] h-[200px] rounded-l"
                 loading="lazy"
@@ -244,7 +262,7 @@ const AllBooksPage = () => {
                   </a>
                 </div>
               </div>
-            </article>
+            </article> */}
           </div>
         </div>
       </section>

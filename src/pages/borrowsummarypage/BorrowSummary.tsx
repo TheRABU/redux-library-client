@@ -1,11 +1,8 @@
-import {
-  useGetAllBorrowsQuery,
-  useGetBorrowSummaryQuery,
-} from "@/redux/features/book/borrowBooksApi";
+import { useGetAllBorrowsQuery } from "@/redux/features/book/borrowBooksApi";
 
 const BorrowSummary = () => {
   const { data: borrows, isLoading, isError } = useGetAllBorrowsQuery();
-  console.log(borrows);
+  console.log("All Borrows", borrows);
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
   if (isError)
     return (
@@ -47,7 +44,7 @@ const BorrowSummary = () => {
               </tr>
             </thead>
             <tbody className="select-none">
-              {borrows?.data?.map((borrow, idx) => (
+              {borrows.data?.map((borrow, idx) => (
                 <tr key={idx} className="border-b">
                   <td className="px-6 py-1.5 text-center">
                     <input type="checkbox" className="w-4 h-4" />
@@ -55,7 +52,11 @@ const BorrowSummary = () => {
                   <td className="px-6 py-1.5 whitespace-nowrap text-sm">
                     <div className="flex items-center gap-2">
                       <img
-                        src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
+                        src={
+                          borrow.bookImg
+                            ? borrow.bookImg
+                            : "https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
+                        }
                         alt="Book"
                         className="aspect-square rounded-lg object-cover h-16"
                       />

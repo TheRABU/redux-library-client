@@ -13,11 +13,11 @@ const Book = ({ book }: BookProps) => {
     genre,
     isbn,
     copies,
-    availability,
+    available,
     description,
     bookId,
     _id,
-    bookImgUrl,
+    imgUrl,
   } = book;
 
   const id = _id || bookId; // Fallback for MongoDB or local data
@@ -27,7 +27,7 @@ const Book = ({ book }: BookProps) => {
       <div className="h-48 overflow-hidden bg-blue-500">
         <img
           src={
-            bookImgUrl ||
+            imgUrl ||
             "https://img.freepik.com/free-vector/minimalist-book-cover-template_23-2148899519.jpg?t=st=1751633563~exp=1751637163~hmac=75f26072c8faf2c42f1d7af1c43257fe845b5c4d850ba29a4132dffd4bfb0223&w=740"
           }
           alt={title}
@@ -53,7 +53,7 @@ const Book = ({ book }: BookProps) => {
             Copies: {copies}
           </span>
           <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
-            {availability ? "Available" : "Unavailable"}
+            {available ? "Available" : "Unavailable"}
           </span>
           <Link
             to={`/books/${id}`}
@@ -63,7 +63,12 @@ const Book = ({ book }: BookProps) => {
           </Link>
         </div>
         <div className="mt-4">
-          <Borrow book={book} />
+          <Borrow
+            bookId={id}
+            title={book.title}
+            isbn={book.isbn}
+            copies={book.copies}
+          />
         </div>
       </div>
     </div>

@@ -25,8 +25,8 @@ const ViewDetails = () => {
                 <img
                   className="w-full h-full object-cover"
                   src={
-                    book.bookImgUrl
-                      ? book.bookImgUrl
+                    book.imgUrl
+                      ? book.imgUrl
                       : "https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
                   }
                   alt="Product Image"
