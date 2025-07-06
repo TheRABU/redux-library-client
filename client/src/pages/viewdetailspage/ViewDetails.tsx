@@ -2,7 +2,6 @@ import { useGetBookByIdQuery } from "@/redux/features/book/booksApi";
 import toast, { Toaster } from "react-hot-toast";
 import { useParams } from "react-router";
 import Borrow from "../borrowbookpage/Borrow";
-import { Button } from "@/components/ui/button";
 import EditBookForm from "@/components/EditBookForm";
 import DeleteModal from "@/components/DeleteModal";
 
@@ -14,7 +13,7 @@ const ViewDetails = () => {
   // the delete/edit button's closing opening
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
-  if (isError || !book)
+  if (isError || !book || !id)
     return <p className="text-center mt-10">Book not found.</p>;
 
   const showPendingWorkToast = () => {
@@ -132,9 +131,6 @@ const ViewDetails = () => {
                   <EditBookForm />
                 </Button> */}
                 <EditBookForm book={book} />
-                <Button className="bg-red-500" variant="outline">
-                  Delete Book
-                </Button>
                 <DeleteModal bookId={id} bookTitle={book.title} />
               </div>
             </div>

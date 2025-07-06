@@ -20,6 +20,7 @@ export interface BorrowRecord {
   isbn: string;
   quantity: number;
   dueDate: string;
+  createdAt?: Date;
 }
 
 export interface BorrowSummary {
