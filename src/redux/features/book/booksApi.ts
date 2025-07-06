@@ -3,7 +3,9 @@ import type { BookInterface } from "@/types";
 
 const booksApi = createApi({
   reducerPath: "booksApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://library-management-backend-pi.vercel.app/api",
+  }),
   tagTypes: ["Books"],
   endpoints: (builder) => ({
     getBooks: builder.query<BookInterface[], void>({
