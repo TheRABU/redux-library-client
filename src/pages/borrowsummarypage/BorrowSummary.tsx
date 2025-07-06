@@ -1,7 +1,12 @@
 import { useGetAllBorrowsQuery } from "@/redux/features/book/borrowBooksApi";
+import type { BorrowRecord } from "@/types";
 
 const BorrowSummary = () => {
-  const { data: borrows, isLoading, isError } = useGetAllBorrowsQuery();
+  const {
+    data: borrows,
+    isLoading,
+    isError,
+  } = useGetAllBorrowsQuery(undefined);
   console.log("All Borrows", borrows);
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
   if (isError)
@@ -44,7 +49,7 @@ const BorrowSummary = () => {
               </tr>
             </thead>
             <tbody className="select-none">
-              {borrows.data?.map((borrow, idx) => (
+              {borrows?.data?.map((borrow: BorrowRecord, idx: number) => (
                 <tr key={idx} className="border-b">
                   <td className="px-6 py-1.5 text-center">
                     <input type="checkbox" className="w-4 h-4" />
@@ -67,10 +72,14 @@ const BorrowSummary = () => {
                     {borrow.isbn}
                   </td>
                   <td className="px-6 py-1.5 text-sm text-center">
-                    {borrow.createdAt}
+                    {borrow.createdAt
+                      ? new Date(borrow.createdAt).toLocaleDateString()
+                      : "N/A"}
                   </td>
                   <td className="px-6 py-1.5 text-sm text-center">
-                    {borrow.dueDate}
+                    {borrow.dueDate
+                      ? new Date(borrow.dueDate).toLocaleDateString()
+                      : "N/A"}
                   </td>
                   <td className="px-6 py-1.5 text-sm text-center">
                     {borrow.quantity}

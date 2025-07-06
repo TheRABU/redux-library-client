@@ -10,10 +10,10 @@ const booksApi = createApi({
       query: () => "/books",
       transformResponse: (response: { data: BookInterface[] }) => response.data,
     }),
-    getBookById: builder.query<BookInterface, string>({
+    getBookById: builder.query({
       query: (id) => `/books/${id}`,
     }),
-    addBook: builder.mutation<BookInterface, Partial<BookInterface>>({
+    addBook: builder.mutation({
       query: (newBook) => ({
         url: "/books",
         method: "POST",
@@ -27,7 +27,7 @@ const booksApi = createApi({
     >({
       query: ({ id, data }) => ({
         url: `/books/${id}`,
-        method: "PATCH",
+        method: "PUT",
         body: data,
       }),
       invalidatesTags: ["Books"],

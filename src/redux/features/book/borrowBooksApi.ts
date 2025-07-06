@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { BorrowRecord, BorrowSummary } from "@/types";
+// import type { BorrowRecord, BorrowSummary } from "@/types";
 
 // You can adjust the base URL if needed
 export const borrowBooksApi = createApi({
@@ -18,13 +18,13 @@ export const borrowBooksApi = createApi({
     }),
 
     // 2. GET /borrow — View all borrow records
-    getAllBorrows: builder.query<BorrowRecord[], void>({
+    getAllBorrows: builder.query({
       query: () => "/borrows",
       providesTags: ["Borrows"],
     }),
 
     // 3. GET /borrow-summary — Aggregated borrow stats
-    getBorrowSummary: builder.query<BorrowSummary[], void>({
+    getBorrowSummary: builder.query({
       query: () => "/borrow-summary",
       providesTags: ["Summary"],
     }),

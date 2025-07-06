@@ -16,26 +16,42 @@ const AddBook = () => {
     // } else {
     //   availability = false;
     // }
-    const availability = form.availability.value === "true";
+    const availability =
+      (form.elements.namedItem("availability") as HTMLSelectElement).value ===
+      "true";
     const newBook = {
-      title: form.title.value.trim(),
-      author: form.author.value.trim(),
-      genre: form.genre.value,
-      isbn: form.isbn.value.trim(),
-      description: form.description.value.trim(),
-      copies: Number(form.quantity.value),
-      availability: availability,
+      title: (
+        form.elements.namedItem("title") as HTMLInputElement
+      ).value.trim(),
+      author: (
+        form.elements.namedItem("author") as HTMLInputElement
+      ).value.trim(),
+      genre: (
+        form.elements.namedItem("genre") as HTMLSelectElement
+      ).value.toUpperCase(), // this gave me error because in the backend bloody typescript enum was UPPERCASE LETTERS!!!!
+      isbn: (form.elements.namedItem("isbn") as HTMLInputElement).value.trim(),
+      description: (
+        form.elements.namedItem("description") as HTMLTextAreaElement
+      ).value.trim(),
+      copies: Number(
+        (form.elements.namedItem("quantity") as HTMLSelectElement).value
+      ),
+      available: availability,
     };
-    console.log(newBook);
 
     try {
       await addBook(newBook).unwrap();
-      toast.success("Book added successfully!");
+
       form.reset();
       navigate("/");
+      toast.success("Book added successfully!");
     } catch (err) {
       toast.error("Failed to add book.");
-      console.error(err);
+      if (err instanceof Error) {
+        console.error(err.message);
+      } else {
+        console.error(err);
+      }
     }
   };
 

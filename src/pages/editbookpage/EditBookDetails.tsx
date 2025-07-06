@@ -3,7 +3,7 @@ import { Link } from "react-router";
 const EditBookDetails = () => {
   return (
     <>
-      <div className="bg-white border border-4 rounded-lg shadow relative m-10">
+      <div className="bg-white border-4 rounded-lg shadow relative m-10">
         <div className="flex items-start justify-between p-5 border-b rounded-t">
           <h3 className="text-xl font-semibold">Edit product</h3>
           <Link to={"/"}>
@@ -33,7 +33,7 @@ const EditBookDetails = () => {
             <div className="grid grid-cols-6 gap-6">
               <div className="col-span-6 sm:col-span-3">
                 <label
-                  for="product-name"
+                  htmlFor="product-name"
                   className="text-sm font-medium text-gray-900 block mb-2"
                 >
                   Product Name
@@ -44,12 +44,11 @@ const EditBookDetails = () => {
                   id="product-name"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                   placeholder="Apple Imac 27”"
-                  required=""
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
                 <label
-                  for="category"
+                  htmlFor="category"
                   className="text-sm font-medium text-gray-900 block mb-2"
                 >
                   Category
@@ -60,12 +59,11 @@ const EditBookDetails = () => {
                   id="category"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                   placeholder="Electronics"
-                  required=""
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
                 <label
-                  for="brand"
+                  htmlFor="brand"
                   className="text-sm font-medium text-gray-900 block mb-2"
                 >
                   Brand
@@ -76,12 +74,11 @@ const EditBookDetails = () => {
                   id="brand"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                   placeholder="Apple"
-                  required=""
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
                 <label
-                  for="price"
+                  htmlFor="price"
                   className="text-sm font-medium text-gray-900 block mb-2"
                 >
                   Price
@@ -92,19 +89,17 @@ const EditBookDetails = () => {
                   id="price"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                   placeholder="$2300"
-                  required=""
                 />
               </div>
               <div className="col-span-full">
                 <label
-                  for="product-details"
+                  htmlFor="product-details"
                   className="text-sm font-medium text-gray-900 block mb-2"
                 >
                   Product Details
                 </label>
                 <textarea
                   id="product-details"
-                  rows="6"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4"
                   placeholder="Details"
                 ></textarea>

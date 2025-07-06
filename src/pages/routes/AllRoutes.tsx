@@ -30,10 +30,10 @@ const AllRoutes = () => {
           path: "/books/:id",
           element: <ViewDetails />,
         },
-        {
-          path: "/edit-book/:id",
-          element: <EditBookDetails />,
-        },
+        // {
+        //   path: "/edit-book/:id",
+        //   element: <EditBookDetails />,
+        // },
         {
           path: "/borrow-summary",
           element: <BorrowSummary />,

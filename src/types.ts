@@ -15,10 +15,12 @@ export interface BookInterface {
 export interface BorrowRecord {
   _id?: string;
   bookId: string;
+  bookImg: string;
   title: string;
   isbn: string;
   quantity: number;
   dueDate: string;
+  createdAt?: Date;
 }
 
 export interface BorrowSummary {

@@ -11,7 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -28,7 +27,7 @@ import { useNavigate } from "react-router";
 
 // baler bookProps
 interface BorrowProps {
-  bookId: string;
+  bookId: string | undefined;
   title: string;
   isbn: string;
   copies?: number;
