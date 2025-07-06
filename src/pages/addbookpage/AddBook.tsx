@@ -1,6 +1,7 @@
 import { toast } from "react-hot-toast";
 import { useAddBookMutation } from "@/redux/features/book/booksApi";
 import { useNavigate } from "react-router";
+import { Toaster } from "react-hot-toast";
 
 const AddBook = () => {
   // const dispatch = useDispatch<AppDispatch>();
@@ -142,6 +143,7 @@ const AddBook = () => {
           </form>
         </div>
       </div>
+      <Toaster />
     </section>
   );
 };

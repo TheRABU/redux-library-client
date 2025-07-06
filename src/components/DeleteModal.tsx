@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useDeleteBookMutation } from "@/redux/features/book/booksApi";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 interface DeleteModalProps {
   bookId: string;
@@ -65,6 +66,7 @@ const DeleteModal = ({ bookId, bookTitle }: DeleteModalProps) => {
           </Button>
         </DialogFooter>
       </DialogContent>
+      <Toaster />
     </Dialog>
   );
 };

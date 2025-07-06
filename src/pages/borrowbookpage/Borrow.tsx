@@ -24,6 +24,7 @@ import { Label } from "@/components/ui/label";
 import * as React from "react";
 import { useBorrowBookMutation } from "@/redux/features/book/borrowBooksApi";
 import { useNavigate } from "react-router";
+import { Toaster } from "react-hot-toast";
 
 // baler bookProps
 interface BorrowProps {
@@ -198,6 +199,7 @@ const Borrow = (book: BorrowProps) => {
             </DialogFooter>
           </form>
         </DialogContent>
+        <Toaster />
       </Dialog>
     </>
   );

@@ -14,6 +14,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useUpdateBookMutation } from "@/redux/features/book/booksApi";
 import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 interface Book {
   _id: string;
@@ -160,6 +161,7 @@ const EditBookForm = ({ book }: EditBookFormProps) => {
           </DialogFooter>
         </form>
       </DialogContent>
+      <Toaster />
     </Dialog>
   );
 };
