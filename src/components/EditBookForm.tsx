@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import {
   Dialog,
   DialogContent,
@@ -13,16 +13,24 @@ import { Label } from "@radix-ui/react-label";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useUpdateBookMutation } from "@/redux/features/book/booksApi";
-import type { BookInterface } from "@/types";
 import toast from "react-hot-toast";
 
-// interface EditBookFormProps {
-//   book: BookInterface;
-// }
+interface Book {
+  _id: string;
+  title: string;
+  author: string;
+  genre: string;
+  description: string;
+  copies: number;
+}
 
-const EditBookForm = ({ book }) => {
+interface EditBookFormProps {
+  book: Book;
+}
+
+const EditBookForm = ({ book }: EditBookFormProps) => {
   const [open, setOpen] = useState(false);
-  const { id } = useParams();
+  // const { id } = useParams();
   const navigate = useNavigate();
   const [updateBook, { isLoading }] = useUpdateBookMutation();
 
@@ -30,11 +38,21 @@ const EditBookForm = ({ book }) => {
     e.preventDefault();
 
     const form = e.currentTarget;
-    const title = form.title.value.trim();
-    const author = form.author.value.trim();
-    const genre = form.genre.value.trim();
-    const description = form.description.value.trim();
-    const copies = Number(form.copies.value);
+    const title = (
+      form.elements.namedItem("title") as HTMLInputElement
+    ).value.trim();
+    const author = (
+      form.elements.namedItem("author") as HTMLInputElement
+    ).value.trim();
+    const genre = (
+      form.elements.namedItem("genre") as HTMLInputElement
+    ).value.trim();
+    const description = (
+      form.elements.namedItem("description") as HTMLInputElement
+    ).value.trim();
+    const copies = Number(
+      (form.elements.namedItem("copies") as HTMLInputElement).value
+    );
 
     const updatedData = {
       title,
