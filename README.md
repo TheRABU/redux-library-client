@@ -1,69 +1,89 @@
-# React + TypeScript + Vite
+# 📚 Book Borrowing System — Client (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the **React-based client-side** application of the **Book Borrowing System**, designed to interact with the backend API for managing books, borrowing, and user-friendly summaries. The UI is built with **React**, **Tailwind CSS**, and **ShadCN UI** components for a modern experience.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- 📖 View all available books
+- 🟢 Borrow a book with selected due date and quantity
+- 📅 Date picker with calendar UI (ShadCN Calendar)
+- ✅ Real-time form validation (copy limits, due date)
+- 📊 Summary page showing borrowed books and quantities
+- 🔄 Live data updates using **Redux Toolkit Query (RTK Query)**
+- 🎨 Responsive and clean UI with TailwindCSS and ShadCN components
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🧱 Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **React 18+**
+- **TypeScript**
+- **Tailwind CSS**
+- **ShadCN UI**
+- **Redux Toolkit & RTK Query**
+- **React Router DOM**
+- **Date-fns** for date formatting
+- **React Hot Toast** for notifications
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 📂 Project Structure
+      src/
+      ├── components/ # UI components (Buttons, Cards, Inputs)
+      ├── pages/ # Page components like Home, Summary
+      ├── redux/ # Redux slices and RTK Query API
+      │ └── features/
+      ├── assets/ # Images, icons, etc.
+      ├── App.tsx # Main app and routes
+      ├── main.tsx # React entry point
+      └── index.css # Global styles (Tailwind)
+
+📅 Borrow Workflow
+User clicks "Borrow this Book"
+
+A Dialog opens with quantity and due date input
+
+Selected due date is formatted as YYYY-MM-DD before submission
+
+Data is posted to backend
+
+Book copies are updated and a toast confirms success
+
+🛠 How to Run Locally
+1. Clone the Repository
+   ```
+   git clone https://github.com/yourusername/book-borrowing-client.git
+   cd book-borrowing-client
+   ```
+2. Install Dependencies
+   ```
+   npm install
+    # or
+   yarn
+   ```
+3. Start the Dev Server
+   ```
+   npm run dev
+    # or
+   yarn dev
+Make sure the backend server is running on http://localhost:5000
+
+
+🔗 API Integration
+The client communicates with the backend at:
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+http://localhost:5000/api
 ```
+API endpoints used:
+
+POST /api/borrow — Borrow a book
+
+GET /api/borrow — Get all borrow records
+
+GET /api/borrow-summary — Get borrowed book summaries
+
+These are configured using RTK Query inside redux/features/book/borrowBooksApi.ts
+
+
