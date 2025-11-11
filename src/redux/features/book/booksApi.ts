@@ -11,6 +11,7 @@ const booksApi = createApi({
     getBooks: builder.query<BookInterface[], void>({
       query: () => "/books",
       transformResponse: (response: { data: BookInterface[] }) => response.data,
+      providesTags: ["Books"],
     }),
     getBookById: builder.query({
       query: (id) => `/books/${id}`,

@@ -1,6 +1,7 @@
 import Borrow from "@/pages/borrowbookpage/Borrow";
 import type { BookInterface } from "@/types";
 import { Link } from "react-router";
+import EditBookForm from "./EditBookForm";
 
 interface BookProps {
   book: BookInterface;
@@ -62,13 +63,14 @@ const Book = ({ book }: BookProps) => {
             View this book
           </Link>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 flex justify-center items-center gap-x-2">
           <Borrow
             bookId={id}
             title={book.title}
             isbn={book.isbn}
             copies={book.copies}
           />
+          <EditBookForm book={book} />
         </div>
       </div>
     </div>
