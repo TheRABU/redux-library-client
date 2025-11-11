@@ -10,6 +10,7 @@ const ViewDetails = () => {
   const { data, isLoading, isError } = useGetBookByIdQuery(id);
   const book = data?.data;
 
+  // console.log("book data::", book);
   // the delete/edit button's closing opening
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;

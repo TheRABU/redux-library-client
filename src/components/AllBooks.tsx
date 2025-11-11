@@ -4,6 +4,8 @@ import Book from "./Book";
 
 const AllBooks = () => {
   const { data: books, isLoading, isError } = useGetBooksQuery();
+
+  // console.log("All books::", books);
   if (isLoading) return <p className="text-center mt-10">Loading books...</p>;
   if (isError)
     return (
