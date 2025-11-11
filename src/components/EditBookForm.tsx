@@ -17,12 +17,12 @@ import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 
 interface Book {
-  _id: string;
-  title: string;
-  author: string;
-  genre: string;
-  description: string;
-  copies: number;
+  _id?: string;
+  title?: string;
+  author?: string;
+  genre?: string;
+  description?: string;
+  copies?: number;
 }
 
 interface EditBookFormProps {
@@ -65,7 +65,7 @@ const EditBookForm = ({ book }: EditBookFormProps) => {
 
     try {
       await updateBook({
-        id: book._id,
+        id: book._id || "",
         data: updatedData,
       }).unwrap();
 
@@ -92,7 +92,6 @@ const EditBookForm = ({ book }: EditBookFormProps) => {
             </DialogDescription>
           </DialogHeader>
 
-          {/* Title */}
           <div className="my-4">
             <Label htmlFor="title">Title</Label>
             <Input
@@ -104,7 +103,6 @@ const EditBookForm = ({ book }: EditBookFormProps) => {
             />
           </div>
 
-          {/* Author */}
           <div className="my-4">
             <Label htmlFor="author">Author</Label>
             <Input
@@ -116,7 +114,6 @@ const EditBookForm = ({ book }: EditBookFormProps) => {
             />
           </div>
 
-          {/* Genre */}
           <div className="my-4">
             <Label htmlFor="genre">Genre</Label>
             <Input
@@ -128,7 +125,6 @@ const EditBookForm = ({ book }: EditBookFormProps) => {
             />
           </div>
 
-          {/* Description */}
           <div className="my-4">
             <Label htmlFor="description">Description</Label>
             <Input
@@ -140,7 +136,6 @@ const EditBookForm = ({ book }: EditBookFormProps) => {
             />
           </div>
 
-          {/* Copies */}
           <div className="my-4">
             <Label htmlFor="copies">Copies</Label>
             <Input
@@ -153,7 +148,6 @@ const EditBookForm = ({ book }: EditBookFormProps) => {
             />
           </div>
 
-          {/* Submit Button */}
           <DialogFooter>
             <Button type="submit" disabled={isLoading}>
               {isLoading ? "Updating..." : "Update Book"}
