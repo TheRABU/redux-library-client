@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <>
       <div className="">
-        <div className="h-[400px]">
+        <div className="min-h-screen">
           <Hero />
         </div>
         <AllBooks />

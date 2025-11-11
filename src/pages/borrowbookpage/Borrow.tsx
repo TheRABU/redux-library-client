@@ -150,7 +150,6 @@ const Borrow = (book: BorrowProps) => {
               </DialogDescription>
             </DialogHeader>
 
-            {/* Quantity input */}
             <div className="my-4">
               <p className="text-md text-slate-700 mb-2">
                 Available copies: {book.copies}
@@ -165,7 +164,6 @@ const Borrow = (book: BorrowProps) => {
               />
             </div>
 
-            {/* Calendar */}
             <div className="my-4">
               <Label>Due Date</Label>
               <Popover>
@@ -193,7 +191,6 @@ const Borrow = (book: BorrowProps) => {
               </Popover>
             </div>
 
-            {/* Submit Button */}
             <DialogFooter>
               <Button type="submit">Borrow</Button>
             </DialogFooter>
